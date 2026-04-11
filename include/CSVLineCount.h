@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int TureRows;
+extern int TureRows;
 
 int CSVLineCount();
 
