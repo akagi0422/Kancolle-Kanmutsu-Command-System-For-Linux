@@ -40,4 +40,6 @@ int LayEggs() {
 	printf("      \033[48;5;211m                                  \033[0m\n");
 	printf("      \033[44m                                  \033[0m\n");
 	printf("      \033[44m                                  \033[0m\n\n");
+
+	return 0;
 }

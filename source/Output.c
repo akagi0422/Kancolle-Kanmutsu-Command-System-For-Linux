@@ -1,19 +1,30 @@
+#include <stdio.h>
+#include <string.h>
 #include "Output.h"
 #include "FileSet.h"
 
 int Output() {
-    // 文件名称设置
-    char output_file_name[100];
-    snprintf(output_file_name, sizeof(output_file_name), "%s 锁船表.csv", sea_name[0]);
+    // 文件名称设置 导出到名单 CSV 所在目录 这样从哪个目录启动都不影响
+    char output_dir[PATH_LEN];
+    char output_file_name[PATH_LEN + 100];
+
+    snprintf(output_dir, sizeof(output_dir), "%s", csv_path);
+    char *last_slash = strrchr(output_dir, '/');
+    if(last_slash != NULL) {
+        *last_slash = '\0'; // 去掉文件名 只留目录
+    } else {
+        snprintf(output_dir, sizeof(output_dir), "."); // 没有目录部分就用当前目录
+    }
+    snprintf(output_file_name, sizeof(output_file_name), "%s/%s 锁船表.csv", output_dir, sea_name[0]);
 
     // 创建并打开导出文件
     FILE *fp = fopen(output_file_name, "w");
     if (fp == NULL)
     {
-        printf("\033[33m导出文件创建失败\033[0m\n");
-    } else {
-        printf("\033[32m导出文件创建成功 文件名为：%s\033[0m\n", output_file_name);
+        printf("\033[33m导出文件创建失败 文件名为：%s\033[0m\n", output_file_name);
+        return 1; // 原来是只打印一句继续往下 fprintf 空指针 现在直接返回
     }
+    printf("\033[32m导出文件创建成功 文件名为：%s\033[0m\n", output_file_name);
     printf("正在导出当前锁船信息\n");
 
     // 写入 “活动名称”锁船表
@@ -58,4 +69,6 @@ int Output() {
 
     printf("\033[32m当前锁船信息导出完毕\033[0m\n");
     fclose(fp); // 关闭导出文件
+
+    return 0;
 }

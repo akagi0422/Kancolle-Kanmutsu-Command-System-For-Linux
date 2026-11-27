@@ -258,4 +258,6 @@ int KanmutsuDataPrint() {
 			printf("\033[38;5;211m服务器向你扔了一只猫娘 错误代码: 201\033[0m\n");
 		}
 	}
+
+	return 0;
 }

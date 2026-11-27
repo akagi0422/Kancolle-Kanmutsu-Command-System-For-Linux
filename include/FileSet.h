@@ -1,11 +1,13 @@
 #ifndef FileSet_H
 #define FileSet_H
 
-#define FILENAME "../KanmutsuListUTF8.csv" // Linux 读直接导出的 GBK 会乱码 需另存为 UTF8 可根据文件存放位置与文件名修改
+#define CSV_FILE_NAME "KanmutsuListUTF8.csv" // 名单文件名 Linux 读直接导出的 GBK 会乱码 需另存为 UTF8
+#define PATH_LEN 512 // 存放 CSV 完整路径的缓冲区大小
 #define MAX_ROWS 600 // 最大行数 600 行 可根据镇守府床位数自行修改
 #define MAX_CLOS 59 // 最大列数 59 列 由 poi 插件导出 csv 文件列数决定
 #define USEFUL_CLOS 6 // 有用数据 6 列 舰ID 舰名 出击海域 舰种 速力 等级
 #define MAX_SEA 999 // 最大贴条数999 可根据实际活动贴条情况修改 但 999 应该是够了x
+#define SEA_CLOS 4 // 出击海域在 CSV 中的列号 下标从 0 开始
 
 typedef struct {
 	int ID;
@@ -17,6 +19,7 @@ typedef struct {
 } KanmutsuData;
 
 // 改为 extern 声明
+extern char csv_path[PATH_LEN]; // 名单 CSV 的完整路径 运行期由 main.c 查找后确定 读写备份共用
 extern char *CSVData[MAX_ROWS][MAX_CLOS]; // 如果有多个头文件包含 CSVRead.h 应使用 extern char 否则会导致多重定义错误
 extern char *UsefulData[MAX_ROWS][USEFUL_CLOS];  // 有用数据数组
 extern char sea_name[MAX_SEA][50]; // 支持 MAX_SEA 个海图命名 名称最大长度 50 字节 sea_name[0] 设置为活动名称 !0 项为贴条名称

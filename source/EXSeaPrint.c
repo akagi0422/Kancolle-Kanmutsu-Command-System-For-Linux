@@ -46,9 +46,18 @@ int EXSeaPrint() {
         printf(">>");
         scanf("%d", &sea_selectid);
         if(sea_selectid != 999) { // 999 应该够多了 肯定不会有 999 个贴条的
+            // 海域编号越界检查 sea_name 只有 MAX_SEA 项 超了下标就是野读 负号也一样
+            if(sea_selectid < 0 || sea_selectid >= MAX_SEA) {
+                printf("\033[31m★ 海域编号 %d 超出范围 请输入 0 - %d ★\033[0m\n", sea_selectid, MAX_SEA - 1);
+                continue;
+            }
             // 输入海域编号
             printf("★ 当前选择海域 %d ★\n", sea_selectid);
-            printf("★ %s ★\n", sea_name[sea_selectid]);
+            if(sea_selectid <= EXSea_num) {
+                printf("★ %s ★\n", sea_name[sea_selectid]);
+            } else {
+                printf("★ 未命名海域 ★\n"); // 没命名过的海域 sea_name 里是空串
+            }
 
         
             // 检查海域是否锁船
@@ -81,4 +90,5 @@ int EXSeaPrint() {
         
     }
 
+    return 0;
 }

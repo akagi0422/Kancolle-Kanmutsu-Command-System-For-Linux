@@ -1,4 +1,5 @@
 #include "EXSeaSet.h"
+#include "CSVSave.h"
 #include "FileSet.h"
 
 int EXSeaSet() {
@@ -395,6 +396,9 @@ int EXSeaSet() {
 										if(change_flag == 1) {
 											printf("★ 已确认更改 舰娘 %d 前往海域 %d ★\n\n", Kanmutsu_copy[ship_find_index].ID, i);
 											Kanmutsu_copy[ship_find_index].sea = i;
+											if(CSVSave() != 0) {
+												printf("\033[33m★ 名单写回失败 本次改动只在内存中 ★\033[0m\n\n");
+											}
 										} else if(change_flag == 0) {
 											printf("★ 已放弃更改 ★\n\n");
 										} else {
@@ -402,6 +406,9 @@ int EXSeaSet() {
 										}
 								} else { // 待机中 直接锁
 									Kanmutsu_copy[ship_find_index].sea = i; // 锁船
+									if(CSVSave() != 0) {
+										printf("\033[33m★ 名单写回失败 本次改动只在内存中 ★\033[0m\n\n");
+									}
 								}
 							} else { // 没这条船
 								printf("\033[31m★ 未找到 舰ID 为 %d 的舰娘 ★\033[0m\n\n", selected_id);
@@ -489,6 +496,9 @@ int EXSeaSet() {
 									if(change_flag == 1) {
 										printf("已取消 舰娘 %d 派遣计划\n\n", Kanmutsu_copy[ship_find_index].ID);
 										Kanmutsu_copy[ship_find_index].sea = 0;
+										if(CSVSave() != 0) {
+											printf("\033[33m★ 名单写回失败 本次改动只在内存中 ★\033[0m\n\n");
+										}
 										// 打印当前海域锁船信息以供参考
 										for(int j = 1; j < TureRows; j++) {
 											if(Kanmutsu_copy[j].sea == i) {
@@ -603,6 +613,8 @@ int EXSeaSet() {
 			}
 		}
 	}
+
+	return 0;
 }
 
 

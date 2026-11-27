@@ -1,6 +1,7 @@
 #include "FileSet.h"
 
 // 所有变量的实际定义
+char csv_path[PATH_LEN]; // 名单 CSV 的完整路径 由 main.c 在启动时确定
 char *CSVData[MAX_ROWS][MAX_CLOS];
 char *UsefulData[MAX_ROWS][USEFUL_CLOS];
 char sea_name[MAX_SEA][50];
